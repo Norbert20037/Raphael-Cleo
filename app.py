@@ -1,21 +1,6 @@
-from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask import Flask, render_template
 
 app = Flask(__name__)
-
-# Nastavení Flask-Babel pro vícejazyčnou podporu
-app.config['BABEL_DEFAULT_LOCALE'] = 'cs'
-app.config['BABEL_SUPPORTED_LOCALES'] = ['cs', 'en']
-
-babel = Babel(app)
-
-# Opravený způsob nastavení locale selector
-babel.init_app(app)
-
-@babel.locale_selector_func
-def get_locale():
-    # Automatická detekce jazyka na základě IP adresy nebo preferencí prohlížeče
-    return request.accept_languages.best_match(['cs', 'en'])
 
 # Route pro hlavní stránku (index)
 @app.route('/')
