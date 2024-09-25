@@ -4,147 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raphael Cleo - Limitovaná Edice Triček</title>
-    <link rel="stylesheet" href="/static/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #1b1b1b;
-            color: #ffffff;
-            font-family: 'Helvetica Neue', sans-serif;
-            opacity: 0; /* Start hidden */
-            animation: fadeIn 2s ease-in-out forwards; /* Fade-in animation */
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1; /* End at full visibility */
-            }
-        }
-        
-        .navbar {
-            background-color: #000;
-            padding: 1rem 2rem;
-        }
-        
-        .navbar-brand img {
-            height: 50px;
-            width: auto;
-        }
-        
-        .navbar-nav .nav-link {
-            color: #ffffff;
-            margin-right: 1rem;
-            transition: color 0.3s ease-in-out;
-        }
-        
-        .navbar-nav .nav-link:hover {
-            color: #d3a625;
-        }
-        
-        .hero-section {
-            height: 100vh;
-            background-color: #000;
-            background-image: url('/static/images/your-hero-image.jpg'); 
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 1.5s ease-in-out 0.5s forwards; /* Hero section delayed fade-in */
-        }
-        
-        .hero-content img {
-            max-width: 150px;
-            margin-bottom: 20px;
-        }
-        
-        .hero-content h1 {
-            font-size: 4rem;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
-        
-        .hero-content p {
-            font-size: 1.5rem;
-            color: #d3a625;
-        }
-        
-        .product-section {
-            padding: 5rem 0;
-        }
-        
-        .product-card {
-            background-color: #2c2c2c;
-            border: none;
-            border-radius: 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        
-        .product-card:hover {
-            transform: scale(1.08);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
-        
-        .product-card img {
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .product-card img:hover {
-            transform: scale(1.1);
-        }
-        
-        .product-card h5 {
-            color: #fff;
-        }
-        
-        .product-card .btn {
-            background-color: #d3a625;
-            border: none;
-            transition: background-color 0.3s ease-in-out;
-        }
-        
-        .product-card .btn:hover {
-            background-color: #b08e2f;
-        }
-        
-        footer {
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 5rem;
-        }
-        
-        footer a {
-            color: #d3a625;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/style.css"> <!-- Odkaz na vlastní styl -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
-
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
             <img src="/static/images/logo-raphael-cleo.jpg" alt="Raphael Cleo Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,83 +21,80 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Domů</a>
+                    <a class="nav-link" href="{{ url_for('index') }}">Domů</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/kontakt">Kontakt</a>
+                    <a class="nav-link" href="{{ url_for('kontakt') }}">Kontakt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/onas">O nás</a>
+                    <a class="nav-link" href="{{ url_for('onas') }}">O nás</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/kosik">Košík</a>
+                    <a class="nav-link" href="{{ url_for('kosik') }}">Košík</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Obsah stránky -->
     <div class="hero-section">
         <div class="hero-content">
             <img src="/static/images/logo-raphael-cleo.jpg" alt="Raphael Cleo Logo">
-            <h1>Exkluzivní Trička</h1>
-            <p>Limitované edice pro vybrané</p>
+            <h1>Raphael Cleo</h1>
+            <p>Fassion is Passion</p>
         </div>
     </div>
 
-    <!-- Products Section -->
+    <!-- Produkty -->
     <div class="container product-section">
         <div class="row">
+            {% for product in products %}
             <div class="col-md-4">
                 <div class="card product-card">
-                    <img src="/static/images/Tshirts/Black/raphael_cleo_back_cropped.jpg" class="card-img-top" alt="Black Raphael Cleo T-Shirt">
+                    <img src="{{ product['image'] }}" class="card-img-top" alt="{{ product['name'] }}">
                     <div class="card-body">
-                        <h5 class="card-title">Raphael Cleo Black T-Shirt</h5>
-                        <p class="card-text">Cena: 1200 Kč</p>
-                        <p class="card-text">Dostupnost: 20 kusů</p>
-                        <div>
-                            <label for="sizeSelect1">Velikost:</label>
-                            <select id="sizeSelect1" class="form-select">
+                        <h5 class="card-title">{{ product['name'] }}</h5>
+                        <p class="card-text">Cena: {{ product['price'] }} Kč</p>
+                        <form action="{{ url_for('add_to_cart', product_id=product['id']) }}" method="POST">
+                            <label for="sizeSelect{{ product['id'] }}">Velikost:</label>
+                            <select id="sizeSelect{{ product['id'] }}" name="size" class="form-select">
                                 <option value="S">S</option>
                                 <option value="M">M</option>
                                 <option value="L">L</option>
                                 <option value="XL">XL</option>
                             </select>
-                        </div>
-                        <a href="#" class="btn btn-primary mt-2">Koupit</a>
-                    </div>
-                </div>
-            </div>
+                            <div class="mt-2">
+                                <label for="quantity{{ product['id'] }}">Množství:</label>
+                                <input type="number" name="quantity" id="quantity{{ product['id'] }}" value="1" min="1" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Koupit</button>
+                        </form>
+                        <a href="{{ url_for('produkt_detail', product_id=product['id']) }}" class="btn btn-secondary mt-2">Zobrazit detail</a>
 
-            <div class="col-md-4">
-                <div class="card product-card">
-                    <img src="/static/images/Tshirts/Purple/raphael_cleo_front_cropped.jpg" class="card-img-top" alt="Purple Raphael Cleo T-Shirt">
-                    <div class="card-body">
-                        <h5 class="card-title">Raphael Cleo Purple T-Shirt</h5>
-                        <p class="card-text">Cena: 1300 Kč</p>
-                        <p class="card-text">Dostupnost: 15 kusů</p>
-                        <div>
-                            <label for="sizeSelect2">Velikost:</label>
-                            <select id="sizeSelect2" class="form-select">
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                        </div>
-                        <a href="#" class="btn btn-primary mt-2">Koupit</a>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2024 Raphael Cleo. Všechna práva vyhrazena.</p>
-        <p>Sledujte nás na sociálních sítích: <a href="#">Instagram</a>, <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<footer class="mt-5">
+    <p>© 2024 Raphael Cleo. Všechna práva vyhrazena.</p>
+    <p>Sledujte nás na sociálních sítích:</p>
+    <div class="social-icons">
+        <a href="https://www.instagram.com/raphcleo" target="_blank" class="social-link">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/raphcleo" target="_blank" class="social-link">
+            <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://x.com/raphcleo" target="_blank" class="social-link">
+            <i class="fab fa-twitter"></i> <!-- X (dříve Twitter) -->
+        </a>
+    </div>
+</footer>
+
+
 </html>

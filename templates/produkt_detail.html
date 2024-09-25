@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Detail produktu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Ikona Socek -->
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+            <img src="/static/images/logo-raphael-cleo.jpg" alt="Raphael Cleo Logo">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Domů</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('kontakt') }}">Kontakt</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('onas') }}">O nás</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('kosik') }}">Košík</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Detail produktu -->
+    <div class="container mt-5">
+        <h1>{{ product.name }}</h1>
+        <div class="row">
+            <!-- Obrázky produktu -->
+            <div class="col-md-6">
+                <img src="{{ product.image }}" class="img-fluid" alt="{{ product.name }}">
+                <!-- Můžeme přidat další obrázky zde -->
+                <div class="mt-3">
+                    <img src="/static/images/Tshirts/Black/raphael_cleo_detail_1.jpg" class="img-thumbnail" alt="Detail obrázku 1">
+                    <img src="/static/images/Tshirts/Black/raphael_cleo_detail_2.jpg" class="img-thumbnail" alt="Detail obrázku 2">
+                </div>
+            </div>
+
+            <!-- Informace o produktu -->
+            <div class="col-md-6">
+                <h3>Detaily</h3>
+                <ul>
+                    <li>Cena: {{ product.price }} Kč</li>
+                    <li>Dostupnost: {{ product.stock }} kusů</li>
+                    <li>Materiál: 100% bavlna</li>
+                    <li>Specifikace: Ručně šité, vyrobeno v ČR</li>
+                </ul>
+                <form action="{{ url_for('add_to_cart', product_id=product['id']) }}" method="POST">
+                    <label for="sizeSelect">Velikost:</label>
+                    <select id="sizeSelect" name="size" class="form-select mb-3">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Přidat do košíku</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sekce pro recenze -->
+        <div class="reviews-section mt-5">
+            <h3>Recenze:</h3>
+            <!-- Zobrazit existující recenze -->
+            <div class="review">
+                {% for review in reviews %}
+                <p><strong>{{ review.author }}</strong></p>
+                <p>{{ review.content }}</p>
+                <p>Hodnocení: {{ "★" * review.rating }}</p>
+                <hr>
+                {% endfor %}
+            </div>
+
+            <!-- Formulář pro přidání nové recenze -->
+            <form action="{{ url_for('submit_review', product_id=product.id) }}" method="POST">
+                <div class="form-group">
+                    <label for="author">Vaše jméno:</label>
+                    <input type="text" id="author" name="author" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Recenze:</label>
+                    <textarea id="content" name="content" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Hodnocení (1-5):</label>
+                    <select id="rating" name="rating" class="form-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Odeslat recenzi</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<footer class="mt-5">
+    <p>© 2024 Raphael Cleo. Všechna práva vyhrazena.</p>
+    <p>Sledujte nás na sociálních sítích:</p>
+    <div class="social-icons">
+        <a href="https://www.instagram.com/raphcleo" target="_blank" class="social-link">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/raphcleo" target="_blank" class="social-link">
+            <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://x.com/raphcleo" target="_blank" class="social-link">
+            <i class="fab fa-twitter"></i> <!-- X (dříve Twitter) -->
+        </a>
+    </div>
+</footer>
+</html>

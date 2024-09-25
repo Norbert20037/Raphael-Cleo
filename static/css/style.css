@@ -2,13 +2,14 @@ body {
     background-color: #1b1b1b;
     color: #ffffff;
     font-family: 'Helvetica Neue', sans-serif;
-    opacity: 0;
-    animation: fadeIn 2s ease-in-out forwards;
+    opacity: 0; /* Začíná neviditelné */
+    animation: fadeIn 1s ease-in-out forwards; /* Fade-in animace */
 }
 
+/* Fade-in animace pro celé tělo stránky */
 @keyframes fadeIn {
     to {
-        opacity: 1;
+        opacity: 1; /* Konečný stav – plně viditelné */
     }
 }
 
@@ -42,6 +43,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
+    padding: 0 15px;
 }
 
 .hero-section::before {
@@ -58,6 +60,12 @@ body {
     position: relative;
     z-index: 1;
     text-align: center;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out 0.5s forwards; /* Fade-in animace pro hero sekci */
+}
+
+.product-section {
+    padding: 5rem 0;
 }
 
 .product-card {
@@ -65,16 +73,18 @@ body {
     border: none;
     border-radius: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .product-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(211, 166, 37, 0.7);
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.7); /* Bílé podsvícení */
 }
 
 .product-card img {
     transition: transform 0.3s ease-in-out;
+    width: 100%; /* Ujisti se, že obrázky jsou responzivní */
+    height: auto;
 }
 
 .product-card img:hover {
@@ -95,18 +105,9 @@ body {
     background-color: #b08e2f;
 }
 
-.product-card select {
+.table-dark {
     background-color: #1b1b1b;
-    color: #ffffff;
-    border: 1px solid #d3a625;
-    padding: 0.5rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.product-card select:hover {
-    background-color: #2c2c2c;
-    border-color: #b08e2f;
+    color: #fff;
 }
 
 footer {
@@ -119,4 +120,134 @@ footer {
 
 footer a {
     color: #d3a625;
+}
+
+/* Responsivní stylování pro menší zařízení */
+/* Mobilní zařízení (max-width: 576px) */
+@media (max-width: 576px) {
+    .hero-content h1 {
+        font-size: 2rem; /* Zmenšení nadpisu */
+    }
+
+    .hero-content p {
+        font-size: 1rem; /* Zmenšení podnadpisu */
+    }
+
+    .product-section {
+        padding: 2rem 0; /* Zmenšení paddingu pro produkty */
+    }
+
+    .product-card {
+        margin-bottom: 30px; /* Více místa mezi produkty */
+    }
+
+    .navbar {
+        padding: 0.5rem 1rem; /* Zmenšení paddingu pro navbar */
+    }
+
+    .navbar-brand img {
+        height: 40px; /* Zmenšení loga na menších obrazovkách */
+    }
+
+    .hero-section {
+        height: 80vh; /* Zmenšení hero sekce na mobilních zařízeních */
+    }
+}
+
+/* Tabletová zařízení (max-width: 768px) */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem; /* Mírné zmenšení nadpisu */
+    }
+
+    .hero-content p {
+        font-size: 1.2rem; /* Mírné zmenšení podnadpisu */
+    }
+
+    .navbar {
+        padding: 0.75rem 1.5rem; /* Upravení paddingu pro tablety */
+    }
+
+    .hero-section {
+        height: 90vh; /* Zmenšení výšky hero sekce na tabletech */
+    }
+
+    .product-card img {
+        max-width: 100%; /* Obrázky produktů se přizpůsobí šířce */
+    }
+}
+.social-icons {
+    margin-top: 1rem;
+}
+
+.social-link {
+    color: #d3a625;
+    font-size: 2rem; /* Velikost ikon */
+    margin: 0 10px;
+    transition: color 0.3s ease-in-out;
+}
+
+.social-link:hover {
+    color: #fff; /* Změna barvy ikony při najetí myší */
+}
+.btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+}
+.product-card img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card img:hover {
+    transform: scale(1.05);
+}
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Tlačítka */
+.btn {
+    background-color: #d3a625;  /* Zlatá barva */
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #b08e2f; /* Mírně tmavší zlatá barva při hoveru */
+    color: #ffffff;
+}
+
+/* Vstupní pole a textarea */
+.form-control {
+    background-color: #2c2c2c;  /* Tmavá barva pozadí vstupních polí */
+    color: #ffffff;  /* Světlý text */
+    border: 1px solid #555;  /* Jemný tmavý okraj */
+}
+
+.form-control:focus {
+    background-color: #1b1b1b;  /* Ještě tmavší pozadí při zaměření */
+    color: #ffffff;
+    border-color: #d3a625;  /* Zlatý okraj při zaměření */
+    box-shadow: none;
+}
+
+/* Výběr (select) */
+.form-select {
+    background-color: #2c2c2c;  /* Tmavé pozadí */
+    color: #ffffff;  /* Světlý text */
+    border: 1px solid #555;  /* Jemný tmavý okraj */
+}
+
+.form-select:focus {
+    background-color: #1b1b1b;
+    color: #ffffff;
+    border-color: #d3a625;
+    box-shadow: none;
 }
