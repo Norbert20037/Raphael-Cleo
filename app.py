@@ -226,3 +226,40 @@ def submit_review(product_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    session_id = session['session_id']
+    cart_items = CartItem.query.filter_by(session_id=session_id).all()
+
+    if not cart_items:
+        flash('Váš košík je prázdný.', 'danger')
+        return redirect(url_for('kosik'))
+
+    total = sum(item.product.price * item.quantity for item in cart_items) * 100  # Celková částka v haléřích
+
+    try:
+        # Vytvoření Stripe platby
+        stripe_charge = stripe.Charge.create(
+            amount=total,  # Celková částka v haléřích
+            currency='czk',
+            description='Platba za trička Raphael Cleo',
+            source=request.form['stripeToken']
+        )
+
+        # Po úspěšné platbě
+        flash('Platba byla úspěšně provedena. Děkujeme!', 'success')
+        session.pop('cart', None)  # Vyprázdnění košíku po úspěšné platbě
+
+    except stripe.error.StripeError as e:
+        flash(f'Platba selhala: {e.user_message}', 'danger')
+        return redirect(url_for('kosik'))
+
+    return redirect(url_for('index'))
+
+import stripe
+
+# Stripe tajný klíč (nahraď tvým vlastním klíčem ze Stripe Dashboardu)
+stripe.api_key = 'tvůj_tajný_klíč'
+
+# Stripe publishable key (použije se na klientské straně)
+STRIPE_PUBLISHABLE_KEY = 'tvůj_veřejný_klíč'

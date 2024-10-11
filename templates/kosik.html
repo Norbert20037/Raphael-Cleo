@@ -71,6 +71,18 @@
             </tbody>
         </table>
         <h3>Celkem: {{ total }} Kč</h3>
+        <form action="{{ url_for('checkout') }}" method="POST">
+            <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ publishable_key }}"
+                data-amount="{{ total * 100 }}"  <!-- Celková částka v haléřích (např. 100 Kč = 10000 haléřů) -->
+                data-name="Raphael Cleo"
+                data-description="Platba za trička"
+                data-currency="czk"
+                data-locale="auto">
+            </script>
+        </form>
+        
         <a href="/" class="btn btn-primary">Pokračovat v nákupu</a>
     </div>
 
